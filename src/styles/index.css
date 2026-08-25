@@ -1,1 +1,5 @@
 @layer reset, base, layout, components, utilities;
+
+@import './tokens/primitives.css';
+@import './tokens/semantic.css';
+@import './base/fonts.css';
