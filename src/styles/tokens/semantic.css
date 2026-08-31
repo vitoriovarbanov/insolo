@@ -1,0 +1,75 @@
+:root {
+  /* --- Surfaces --- */
+  --color-surface: var(--teal-950);
+  --color-surface-sunken: var(--teal-900);
+  --color-surface-raised: var(--teal-850);
+  --color-surface-inverse: var(--teal-50);
+  --color-surface-brand: var(--copper-500);
+  --color-surface-brand-subtle: oklch(0.656 0.132 50 / 0.12);
+
+  /* --- Text --- */
+  --color-text: var(--teal-100);
+  --color-text-muted: var(--teal-400);
+  --color-text-label: var(--teal-500);
+  --color-text-inverse: var(--teal-950);
+  --color-text-on-brand: var(--teal-950);
+  --color-text-brand: var(--copper-500);
+  --color-text-sea: var(--sea-500);
+
+  /* --- Borders --- */
+  --color-border: oklch(1 0 0 / 0.07);
+  --color-border-strong: oklch(1 0 0 / 0.16);
+  --color-border-brand: var(--copper-500);
+
+  /* --- Interaction --- */
+  --color-action: var(--copper-500);
+  --color-action-hover: var(--copper-400);
+  --color-action-active: var(--copper-600);
+  --color-action-text: var(--teal-950);
+  --color-action-secondary: var(--sea-500);
+  --color-action-secondary-hover: var(--sea-400);
+  --color-focus-ring: var(--teal-100);
+
+  /* --- Status --- */
+  --color-danger: var(--red-400);
+
+  /* --- Typography roles --- */
+  --font-body: var(--font-display);
+  --font-heading: var(--font-display);
+  --font-data: var(--font-mono);
+
+  --text-micro: var(--step--2);
+  --text-small: var(--step--1);
+  --text-body: var(--step-0);
+  --text-lead: var(--step-1);
+  --text-h3: var(--step-2);
+  --text-h2: var(--step-3);
+  --text-h1: var(--step-4);
+  --text-display: var(--step-5);
+
+  /* Display type is set heavy and tight; a light weight reads as
+     weak at this scale in a grotesque. */
+  --weight-heading: var(--weight-bold);
+  --weight-display: var(--weight-black);
+  --tracking-heading: var(--tracking-display);
+
+  /* Labels, eyebrows and readouts are mono. Body copy is not —
+     monospace punishes anyone actually reading a paragraph. */
+  --font-label: var(--font-mono);
+  --tracking-label-role: var(--tracking-label);
+
+  /* --- Spacing roles --- */
+  --gap-inline: var(--space-2xs);
+  --gap-stack: var(--space-s);
+  --gap-block: var(--space-m);
+  --section-padding-block: var(--space-section);
+  --container-padding-inline: var(--space-m);
+
+  /* --- Shape --- */
+  --radius-control: var(--radius-s);
+  --radius-card: var(--radius-m);
+
+  /* --- Focus ring, applied everywhere. Never `outline: none`. --- */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+}

@@ -1,0 +1,81 @@
+@layer components {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-inline);
+
+    /* 44px minimum tap target, per WCAG 2.5.5. */
+    min-block-size: 2.75rem;
+    padding-block: var(--space-2xs);
+    padding-inline: var(--space-m);
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-control);
+
+    font-family: var(--font-label);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label-role);
+    text-transform: uppercase;
+    line-height: var(--leading-snug);
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out),
+      translate var(--duration-fast) var(--ease-out);
+  }
+
+  .button:active {
+    translate: 0 1px;
+  }
+
+  .button--primary {
+    background-color: var(--color-action);
+    border-color: var(--color-action);
+    color: var(--color-action-text);
+
+    &:hover {
+      background-color: var(--color-action-hover);
+      border-color: var(--color-action-hover);
+    }
+  }
+
+  .button--secondary {
+    background-color: transparent;
+    border-color: var(--color-action-secondary);
+    color: var(--color-action-secondary);
+
+    &:hover {
+      background-color: color-mix(
+        in oklab,
+        var(--color-action-secondary) 14%,
+        transparent
+      );
+      border-color: var(--color-action-secondary-hover);
+      color: var(--color-action-secondary-hover);
+    }
+  }
+
+  .button--ghost {
+    background-color: transparent;
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+
+    &:hover {
+      border-color: var(--color-action);
+      color: var(--color-text-brand);
+    }
+  }
+
+  .button:disabled,
+  .button[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,72 @@
+@layer base {
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    font-weight: var(--weight-heading);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-heading);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    line-height: var(--leading-display);
+    font-weight: var(--weight-display);
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+  }
+
+  h3 {
+    font-size: var(--text-h3);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  p {
+    text-wrap: pretty;
+    max-width: var(--measure);
+  }
+
+  a {
+    color: var(--color-text-brand);
+    text-underline-offset: 0.2em;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  a:hover {
+    color: var(--color-action-hover);
+  }
+
+  /* Numeric readouts line up in columns. */
+  :where(dd, .num) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The single global focus style. Applied to every focusable element.
+     `outline: none` must never appear anywhere in this codebase. */
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  ::selection {
+    background-color: var(--color-surface-brand);
+    color: var(--color-text-on-brand);
+  }
+
+  /* Dark UI needs the form controls told, or they render light. */
+  :root {
+    color-scheme: dark;
+  }
+}
