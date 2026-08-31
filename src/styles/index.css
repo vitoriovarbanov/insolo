@@ -2,4 +2,15 @@
 
 @import './tokens/primitives.css';
 @import './tokens/semantic.css';
+
 @import './base/fonts.css';
+@import './base/reset.css';
+@import './base/elements.css';
+
+@import './layout/container.css';
+@import './layout/primitives.css';
+
+@import './components/label.css';
+@import './components/button.css';
+@import './components/card.css';
+@import './components/styleguide.css';

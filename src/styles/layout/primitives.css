@@ -1,0 +1,94 @@
+@layer layout {
+  /* Vertical rhythm. Spaces direct children only. */
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-stack);
+  }
+
+  .stack--block {
+    gap: var(--gap-block);
+  }
+
+  .stack--tight {
+    gap: var(--gap-inline);
+  }
+
+  /* Horizontal group that wraps instead of overflowing. */
+  .cluster {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-inline);
+    align-items: center;
+  }
+
+  .cluster--between {
+    justify-content: space-between;
+  }
+
+  /* Responsive columns with no media query: items claim a minimum
+     width and wrap when they cannot have it. The min() is what stops
+     it overflowing on a narrow screen. */
+  .grid {
+    display: grid;
+    gap: var(--gap-block);
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(var(--grid-min, 18rem), 100%), 1fr)
+    );
+  }
+
+  /* Constrain prose to a readable measure. */
+  .center {
+    box-sizing: content-box;
+    max-width: var(--measure);
+    margin-inline: auto;
+  }
+
+  .measure-tight {
+    max-width: var(--measure-tight);
+  }
+
+  /* A hairline-divided readout rail — Horizon's signature data block. */
+  .rail {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    border-block-start: 1px solid var(--color-border-strong);
+  }
+
+  .rail__cell {
+    position: relative;
+    padding: var(--space-s) var(--space-m);
+    border-inline-end: 1px solid var(--color-border);
+  }
+
+  .rail__cell:last-child {
+    border-inline-end: 0;
+  }
+
+  .rail__cell::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: -1px;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-action);
+    transition: width var(--duration-slow) var(--ease-out);
+  }
+
+  .rail__cell:hover::after {
+    width: 100%;
+  }
+
+  /* Visually hidden but available to screen readers. Used by the skip
+     link and icon-only button labels. */
+  .visually-hidden:not(:focus):not(:active) {
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+  }
+}
