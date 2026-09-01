@@ -1,0 +1,17 @@
+# inSolo is currently FICTIONAL. Business details on this site are
+# placeholders, so crawling is disallowed until they are real.
+# See CLAUDE.md, "Fictional company constraints".
+
+User-agent: *
+Disallow: /
+
+# AT LAUNCH, replace the two lines above with:
+#
+#   User-agent: *
+#   Allow: /
+#   Disallow: /styleguide.html
+#
+# and set VITE_INDEXABLE=true in the Cloudflare dashboard, and point
+# the Sitemap line below at the real domain.
+
+Sitemap: https://insolo.pages.dev/sitemap.xml
