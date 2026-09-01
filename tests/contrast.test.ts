@@ -52,7 +52,7 @@ const RAISED: Oklch = [0.222, 0.033, 171]; // --teal-850, card surface
 const TEXT: Oklch = [0.916, 0.012, 178]; // --teal-100
 const MUTED: Oklch = [0.705, 0.028, 181]; // --teal-400
 const LABEL: Oklch = [0.61, 0.035, 184]; // --teal-500
-const COPPER: Oklch = [0.656, 0.132, 50]; // --copper-500
+const COPPER: Oklch = [0.718, 0.186, 48.5]; // --copper-500, = the logo orange
 const SEA: Oklch = [0.61, 0.065, 184]; // --sea-500
 
 describe('Horizon palette contrast (dark-first)', () => {
@@ -84,6 +84,14 @@ describe('Horizon palette contrast (dark-first)', () => {
 
   it('muted text stays legible on raised cards', () => {
     expect(contrast(MUTED, RAISED)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('button labels pass on every action state, not just the default', () => {
+    const HOVER: Oklch = [0.775, 0.143, 52]; // --copper-400
+    const ACTIVE: Oklch = [0.64, 0.175, 45]; // --copper-600
+    expect(contrast(INK, COPPER)).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(INK, HOVER)).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(INK, ACTIVE)).toBeGreaterThanOrEqual(4.5);
   });
 });
 

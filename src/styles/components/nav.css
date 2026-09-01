@@ -1,0 +1,225 @@
+@layer components {
+  .site-header {
+    position: sticky;
+    /* positioning context for the mobile disclosure panel */
+    isolation: isolate;
+    inset-block-start: 0;
+    z-index: 10;
+    background-color: color-mix(
+      in oklab,
+      var(--color-surface) 88%,
+      transparent
+    );
+    backdrop-filter: blur(10px);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .site-header > .container {
+    min-block-size: 3.5rem;
+    flex-wrap: nowrap;
+    gap: var(--space-s);
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+
+    /* 44px tap target even though the logo itself is shorter. */
+    min-block-size: 2.75rem;
+    text-decoration: none;
+
+    /* Never let the nav squeeze the logo. Without this the brand is a
+       shrinkable flex item and collapses to zero width on narrow
+       screens — the logo simply disappears. */
+    flex: none;
+  }
+
+  .site-header__logo {
+    /* Height-driven: the width follows from the asset's aspect ratio,
+       so the reserved box stays correct if the lockup is re-cut. */
+    block-size: 1.75rem;
+    inline-size: auto;
+  }
+
+  .site-nav {
+    min-inline-size: 0;
+    flex: 0 1 auto;
+  }
+
+  /* ── the toggle ─────────────────────────────────────────────────
+     Three bars that become a cross. Hidden entirely from 40rem up,
+     where the nav is a plain row and there is nothing to disclose. */
+  .site-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    flex: none;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .site-menu-toggle:hover {
+    border-color: var(--color-action);
+  }
+
+  .site-menu-toggle__bars,
+  .site-menu-toggle__bars::before,
+  .site-menu-toggle__bars::after {
+    display: block;
+    inline-size: 1.125rem;
+    block-size: 2px;
+    background-color: currentColor;
+    transition:
+      transform var(--duration-base) var(--ease-out),
+      opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .site-menu-toggle__bars {
+    position: relative;
+  }
+
+  .site-menu-toggle__bars::before,
+  .site-menu-toggle__bars::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+  }
+
+  .site-menu-toggle__bars::before {
+    transform: translateY(-6px);
+  }
+
+  .site-menu-toggle__bars::after {
+    transform: translateY(6px);
+  }
+
+  .site-header[data-menu-open] .site-menu-toggle {
+    border-color: var(--color-action);
+    color: var(--color-text-brand);
+  }
+
+  .site-header[data-menu-open] .site-menu-toggle__bars {
+    background-color: transparent;
+  }
+
+  .site-header[data-menu-open] .site-menu-toggle__bars::before {
+    transform: translateY(0) rotate(45deg);
+  }
+
+  .site-header[data-menu-open] .site-menu-toggle__bars::after {
+    transform: translateY(0) rotate(-45deg);
+  }
+
+  /* ── the panel, below 40rem ─────────────────────────────────── */
+  .site-nav {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    background-color: var(--color-surface);
+    border-block-end: 1px solid var(--color-border-strong);
+    padding: var(--space-2xs) var(--container-padding-inline) var(--space-s);
+
+    opacity: 0;
+    translate: 0 -0.5rem;
+    visibility: hidden;
+    /* Visibility flips instantly on open and is delayed only on close,
+       so the panel stays visible through the fade-out. Transitioning
+       visibility in both directions would leave it invisible while
+       opening — and a browser refuses to focus an invisible element,
+       which silently breaks moving focus into the panel. */
+    transition:
+      opacity var(--duration-base) var(--ease-out),
+      translate var(--duration-base) var(--ease-out),
+      visibility 0s linear var(--duration-base);
+  }
+
+  .site-header[data-menu-open] .site-nav {
+    opacity: 1;
+    translate: 0 0;
+    visibility: visible;
+    transition:
+      opacity var(--duration-base) var(--ease-out),
+      translate var(--duration-base) var(--ease-out),
+      visibility 0s;
+  }
+
+  .site-nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-nav__link {
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+
+    /* 44px minimum tap target. */
+    min-block-size: 3rem;
+    padding-inline: var(--space-3xs);
+    border-block-end: 1px solid var(--color-border);
+
+    font-family: var(--font-label);
+    font-size: var(--text-small);
+    letter-spacing: var(--tracking-label-role);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-decoration: none;
+
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .site-nav__list li:last-child .site-nav__link {
+    border-block-end: 0;
+  }
+
+  .site-nav__link:hover {
+    color: var(--color-text);
+  }
+
+  .site-nav__link[aria-current='true'] {
+    color: var(--color-text-brand);
+  }
+
+  /* ── 40rem and up: no disclosure at all ─────────────────────── */
+  @media (min-width: 40rem) {
+    .site-menu-toggle {
+      display: none;
+    }
+
+    .site-nav {
+      position: static;
+      background: none;
+      border: 0;
+      padding: 0;
+      opacity: 1;
+      translate: none;
+      visibility: visible;
+      transition: none;
+    }
+
+    .site-nav__list {
+      flex-direction: row;
+      gap: var(--space-m);
+    }
+
+    .site-nav__link {
+      inline-size: auto;
+      min-block-size: 2.75rem;
+      padding-inline: var(--space-2xs);
+      border-block-end: 0;
+      font-size: var(--text-micro);
+      white-space: nowrap;
+    }
+  }
+}
