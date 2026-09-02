@@ -2,7 +2,7 @@
 <!-- styleguide.html is absent by design and must stay absent. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://insolo.pages.dev/</loc>
+    <loc>https://insolo.vitorio-0405.workers.dev/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>

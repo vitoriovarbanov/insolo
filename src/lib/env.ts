@@ -1,5 +1,5 @@
 export interface SiteEnv {
-  /** Absolute origin with no trailing slash, e.g. https://insolo.pages.dev */
+  /** Absolute origin with no trailing slash, e.g. https://insolo.vitorio-0405.workers.dev */
   readonly siteUrl: string;
   /** When false, the site emits noindex and omits business structured data. */
   readonly indexable: boolean;
