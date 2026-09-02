@@ -26,5 +26,5 @@ jobs:
 
       - run: npm run build
         env:
-          VITE_SITE_URL: https://insolo.pages.dev
+          VITE_SITE_URL: https://insolo.vitorio-0405.workers.dev
           VITE_INDEXABLE: 'false'

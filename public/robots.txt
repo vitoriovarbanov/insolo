@@ -14,4 +14,4 @@ Disallow: /
 # and set VITE_INDEXABLE=true in the Cloudflare dashboard, and point
 # the Sitemap line below at the real domain.
 
-Sitemap: https://insolo.pages.dev/sitemap.xml
+Sitemap: https://insolo.vitorio-0405.workers.dev/sitemap.xml

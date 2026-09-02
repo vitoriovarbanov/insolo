@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { site } from '@/content/site';
 import { buildLocalBusinessJsonLd } from '@/lib/structured-data';
 
-const VISIBLE = { siteUrl: 'https://insolo.pages.dev', indexable: true };
-const HIDDEN = { siteUrl: 'https://insolo.pages.dev', indexable: false };
+const VISIBLE = { siteUrl: 'https://example.test', indexable: true };
+const HIDDEN = { siteUrl: 'https://example.test', indexable: false };
 
 /* These are guardrails, not unit tests for their own sake: they are the
    executable form of "do not publish fabricated business data", so the

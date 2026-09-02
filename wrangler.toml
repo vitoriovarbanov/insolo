@@ -1,0 +1,22 @@
+# Cloudflare Workers static assets.
+#
+# NOT Pages. Cloudflare now directs new projects to Workers with static
+# assets, and this project was created that way — the earlier
+# `pages_build_output_dir` key was Pages-only, so `wrangler deploy` saw
+# no valid Worker config and tried to auto-convert the repo to the
+# Workers+Vite-plugin setup, which failed.
+#
+# A purely static site needs no `main` script: unmatched requests are
+# served straight from the assets directory.
+
+name = "insolo"
+compatibility_date = "2026-09-01"
+
+[assets]
+directory = "./dist"
+
+# Serve the real 404.html for unmatched paths. NOT
+# "single-page-application", which would return index.html with a 200
+# for every bad URL — that hides broken links and lets search engines
+# index infinite duplicate pages.
+not_found_handling = "404-page"
