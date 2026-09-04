@@ -3,6 +3,7 @@ import { env } from '@/lib/env';
 import { site } from '@/content/site';
 import { buildLocalBusinessJsonLd, injectJsonLd } from '@/lib/structured-data';
 import { initNav } from '@/components/nav/nav';
+import { initHero } from '@/components/hero/hero';
 import { initScrollReveal } from '@/lib/observer';
 
 /**
@@ -43,4 +44,5 @@ applyAbsoluteUrls();
 injectJsonLd(buildLocalBusinessJsonLd(site, env));
 
 initNav();
+initHero();
 initScrollReveal();
