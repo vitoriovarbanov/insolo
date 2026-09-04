@@ -21,6 +21,11 @@
     z-index: -2;
   }
 
+  .hero__media picture {
+    display: block;
+    block-size: 100%;
+  }
+
   .hero__media img {
     inline-size: 100%;
     block-size: 100%;

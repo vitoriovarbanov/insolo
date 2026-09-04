@@ -1,0 +1,205 @@
+---
+import Base from '@/layouts/Base.astro';
+import { site } from '@/content/site';
+
+const COPPER = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+const TEAL = [50, 100, 200, 300, 400, 500, 600, 700, 800, 850, 900, 950];
+const SEA = [400, 500, 600];
+
+const TYPE_STEPS = [
+  ['--step-6', 'Display'],
+  ['--step-5', 'Heading XL'],
+  ['--step-4', 'Heading 1'],
+  ['--step-3', 'Heading 2'],
+  ['--step-2', 'Heading 3'],
+  ['--step-1', 'Lead'],
+  ['--step-0', 'Body'],
+  ['--step--1', 'Small'],
+  ['--step--2', 'Micro'],
+] as const;
+
+const SPACES = [
+  '--space-3xs',
+  '--space-2xs',
+  '--space-xs',
+  '--space-s',
+  '--space-m',
+  '--space-l',
+  '--space-xl',
+  '--space-2xl',
+  '--space-3xl',
+] as const;
+
+const BUTTON_VARIANTS = ['primary', 'secondary', 'ghost'] as const;
+
+const RAIL_CELLS = [
+  ['Peak altitude', '70.8', 'DEG'],
+  ['Annual irradiance', '1,420', 'kWh/m²'],
+  ['Systems fitted', '318', ''],
+  ['Median payback', '6.4', 'YR'],
+] as const;
+
+const SWATCH_GROUPS = [
+  {
+    id: 'copper',
+    title: 'Copper — brand accent',
+    prefix: 'copper',
+    steps: COPPER,
+  },
+  { id: 'teal', title: 'Teal — neutral', prefix: 'teal', steps: TEAL },
+  { id: 'sea', title: 'Sea — secondary accent', prefix: 'sea', steps: SEA },
+];
+---
+
+<Base title={`${site.name} — Styleguide`} noindex>
+  <main id="main" class="container section stack--block stack">
+    <header class="section-header">
+      <p class="eyebrow">Internal — not published</p>
+      <h1>Horizon</h1>
+      <p class="section-header__lead">
+        Every token and primitive in the inSolo design system.
+      </p>
+    </header>
+
+    <div id="sg-root" class="stack--block stack">
+      {
+        SWATCH_GROUPS.map((group) => (
+          <section class="sg-section stack" id={group.id}>
+            <h2 class="sg-section__title">{group.title}</h2>
+            <div class="grid" style="--grid-min: 7rem">
+              {group.steps.map((step) => (
+                <div class="sg-swatch">
+                  <div
+                    class="sg-swatch__chip"
+                    style={`background-color: var(--${group.prefix}-${step})`}
+                  />
+                  <code class="sg-swatch__name">{`--${group.prefix}-${step}`}</code>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+
+      <section class="sg-section stack" id="type">
+        <h2 class="sg-section__title">Type scale</h2>
+        <div class="stack--tight stack">
+          {
+            TYPE_STEPS.map(([token, label]) => (
+              <div class="sg-row">
+                <code class="sg-row__label">{token}</code>
+                <span style={`font-size: var(${token})`}>{label}</span>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="sg-section stack" id="space">
+        <h2 class="sg-section__title">Spacing scale</h2>
+        <div class="stack stack--tight">
+          {
+            SPACES.map((token) => (
+              <div class="sg-row">
+                <code class="sg-row__label">{token}</code>
+                <div class="sg-bar" style={`width: var(${token})`} />
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="sg-section stack" id="labels">
+        <h2 class="sg-section__title">Labels and readouts</h2>
+        <div class="stack sg-specimen">
+          <p class="eyebrow">Sofia · 42.70° N · Est. 2019</p>
+          <p class="label">Annual irradiance</p>
+          <p class="readout readout--brand">
+            1,420<span class="readout__unit">kWh/m²</span>
+          </p>
+          <p class="sg-note">
+            Mono carries labels, eyebrows and readouts. Body copy stays in the
+            display face — monospace punishes anyone actually reading a
+            paragraph.
+          </p>
+        </div>
+      </section>
+
+      <section class="sg-section stack" id="buttons">
+        <h2 class="sg-section__title">Buttons</h2>
+        <div class="stack">
+          <div class="cluster">
+            {
+              BUTTON_VARIANTS.map((variant) => (
+                <button class={`button button--${variant}`} type="button">
+                  {variant}
+                </button>
+              ))
+            }
+          </div>
+          <div class="cluster">
+            {
+              BUTTON_VARIANTS.map((variant) => (
+                <button
+                  class={`button button--${variant}`}
+                  type="button"
+                  disabled
+                >
+                  {variant} disabled
+                </button>
+              ))
+            }
+          </div>
+          <p class="sg-note">
+            Tab through the buttons above to check the focus ring. Every state
+            is built here, not on the page that happens to need one.
+          </p>
+        </div>
+      </section>
+
+      <section class="sg-section stack" id="rail">
+        <h2 class="sg-section__title">Readout rail</h2>
+        <div class="stack">
+          <dl class="rail">
+            {
+              RAIL_CELLS.map(([label, value, unit]) => (
+                <div class="rail__cell">
+                  <dt class="label">{label}</dt>
+                  <dd class="readout">
+                    {value}
+                    {unit && <span class="readout__unit">{unit}</span>}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="sg-note">
+            Hover a cell — the copper underline wipes across. This is the
+            signature data block.
+          </p>
+        </div>
+      </section>
+
+      <section class="sg-section stack" id="cards">
+        <h2 class="sg-section__title">Cards</h2>
+        <div class="grid">
+          <article class="card">
+            <h3 class="card__title">Static card</h3>
+            <p class="card__body">
+              Raised surface, hairline border, near-square corners.
+            </p>
+            <span class="card__tag">3–12 kWp</span>
+          </article>
+          <article class="card card--interactive">
+            <h3 class="card__title">Interactive card</h3>
+            <p class="card__body">
+              Hover: the border takes the copper and the surface warms. No lift,
+              no shadow — this is an instrument, not a tile.
+            </p>
+            <span class="card__tag">50 kWp+</span>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+</Base>

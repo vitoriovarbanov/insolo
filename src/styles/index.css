@@ -10,10 +10,15 @@
 @import './layout/container.css';
 @import './layout/primitives.css';
 
-@import './components/label.css';
-@import './components/button.css';
-@import './components/card.css';
-@import './components/hero.css';
-@import './components/nav.css';
-@import './components/reveal.css';
-@import './components/styleguide.css';
+/* Order within the components layer is unchanged from before the ui/
+   split: source order breaks specificity ties inside a cascade layer. */
+@import './ui/label.css';
+@import './ui/button.css';
+@import './ui/card.css';
+
+@import '../components/Hero.css';
+@import '../components/Header.css';
+
+@import './ui/reveal.css';
+
+@import '../pages/styleguide.css';

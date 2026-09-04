@@ -1,3 +1,58 @@
+import { z } from 'astro/zod';
+
+const postalAddressSchema = z.object({
+  streetAddress: z.string().min(1),
+  addressLocality: z.string().min(1),
+  postalCode: z.string().min(1),
+  addressCountry: z.string().length(2),
+});
+
+const openingHoursSchema = z.object({
+  days: z.array(z.string().min(1)).min(1),
+  opens: z.string().regex(/^\d{2}:\d{2}$/),
+  closes: z.string().regex(/^\d{2}:\d{2}$/),
+});
+
+const serviceSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  summary: z.string().min(1),
+  scale: z.string().min(1),
+});
+
+const navItemSchema = z.object({
+  href: z.string().min(1),
+  label: z.string().min(1),
+});
+
+const readoutSchema = z.object({
+  label: z.string().min(1),
+  value: z.string().min(1),
+  unit: z.string(),
+  emphasis: z.boolean().optional(),
+});
+
+const siteSchema = z.object({
+  name: z.string().min(1),
+  legalName: z.string().min(1),
+  tagline: z.string().min(1),
+  description: z.string().min(1),
+  email: z.email(),
+  telephone: z.string().regex(/^\+[1-9]\d{6,14}$/),
+  address: postalAddressSchema,
+  geo: z.object({
+    latitude: z.number().min(-90).max(90),
+    longitude: z.number().min(-180).max(180),
+  }),
+  openingHours: z.array(openingHoursSchema).min(1),
+  areaServed: z.array(z.string().min(1)).min(1),
+  priceRange: z.string().min(1),
+  foundingYear: z.number().int().min(1800).max(2100),
+  services: z.array(serviceSchema).min(1),
+  nav: z.array(navItemSchema).min(1),
+  readouts: z.array(readoutSchema),
+});
+
 export interface PostalAddress {
   readonly streetAddress: string;
   readonly addressLocality: string;
@@ -49,7 +104,7 @@ export interface SiteContent {
   readonly readouts: readonly Readout[];
 }
 
-export const site: SiteContent = {
+const content = {
   name: 'inSolo',
   legalName: 'inSolo EOOD', // TODO: real registered entity
   tagline: 'Nine hours of it lands on your roof.',
@@ -125,4 +180,8 @@ export const site: SiteContent = {
     { label: 'Systems fitted', value: '318', unit: '' },
     { label: 'Median payback', value: '6.4', unit: 'YR' },
   ],
-};
+} as const;
+
+siteSchema.parse(content);
+
+export const site: SiteContent = content;

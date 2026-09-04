@@ -1,0 +1,49 @@
+---
+import { Picture } from 'astro:assets';
+import { site } from '@/content/site';
+import heroImage from '@/assets/images/insolo-hero.webp';
+---
+
+<section class="hero" data-reveal>
+  <div class="hero__media">
+    <Picture
+      src={heroImage}
+      formats={['webp']}
+      fallbackFormat="webp"
+      widths={[640, 960, 1280, 1600, 2400]}
+      sizes="100vw"
+      quality={65}
+      alt="Rows of rooftop solar panels facing a city skyline."
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </div>
+  <div class="hero__scrim" aria-hidden="true"></div>
+
+  <div class="hero__content container">
+    <p class="eyebrow">
+      {site.address.addressLocality} · Est. {site.foundingYear}
+    </p>
+    <h1 class="hero__title">{site.tagline}</h1>
+    <p class="hero__lead">{site.description}</p>
+    <div class="hero__actions cluster">
+      <a class="button button--primary" href="#contact">Get a quote</a>
+      <a class="button button--ghost" href="#projects">View projects</a>
+    </div>
+  </div>
+
+  <div class="hero__panel" aria-label="Live performance readouts">
+    {
+      site.readouts.map((readout) => (
+        <div class="hero__readout">
+          <p class="label">{readout.label}</p>
+          <p class={readout.emphasis ? 'readout readout--brand' : 'readout'}>
+            {readout.value}
+            {readout.unit && <span class="readout__unit">{readout.unit}</span>}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+</section>

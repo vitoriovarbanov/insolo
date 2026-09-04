@@ -137,10 +137,8 @@ dist
 !.yarn/sdks
 !.yarn/versions
 
-# Vite files
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-.vite/
+# Astro generated types and cache
+.astro/
 
 # Local working files — never commit.
 CLAUDE.md

@@ -1,67 +1,3 @@
-import { site } from '@/content/site';
-import { el } from '@/lib/dom';
-import logoUrl from '@/assets/images/insolo-logo.png';
-import { initMenu } from '@/components/nav/menu';
-
-const LOGO_W = 540;
-const LOGO_H = 133;
-
-export function renderNav(root: ParentNode = document): void {
-  const brand = root.querySelector<HTMLAnchorElement>('.site-header__brand');
-  if (brand !== null) {
-    brand.replaceChildren(
-      el('img', {
-        src: logoUrl,
-        alt: site.name,
-        width: String(LOGO_W),
-        height: String(LOGO_H),
-        class: 'site-header__logo',
-        fetchpriority: 'high',
-        decoding: 'async',
-      }),
-    );
-  }
-
-  const nav = root.querySelector('nav[aria-label="Primary"]');
-  if (nav === null) {
-    return;
-  }
-
-  nav.append(
-    el(
-      'ul',
-      { class: 'site-nav__list' },
-      site.nav.map((item) =>
-        el('li', {}, [
-          el('a', { class: 'site-nav__link', href: item.href }, [item.label]),
-        ]),
-      ),
-    ),
-  );
-
-  const header = root.querySelector<HTMLElement>('.site-header');
-  const inner = root.querySelector<HTMLElement>('.site-header > .container');
-  if (header === null || inner === null || !(nav instanceof HTMLElement)) {
-    return;
-  }
-
-  nav.id = 'site-menu';
-
-  const toggle = el('button', {
-    type: 'button',
-    class: 'site-menu-toggle',
-    'aria-controls': 'site-menu',
-    'aria-expanded': 'false',
-    'aria-label': 'Menu',
-  });
-  toggle.append(
-    el('span', { class: 'site-menu-toggle__bars', 'aria-hidden': 'true' }),
-  );
-  inner.append(toggle);
-
-  initMenu(toggle, nav, header);
-}
-
 export function trackActiveSection(): void {
   const links = Array.from(
     document.querySelectorAll<HTMLAnchorElement>('.site-nav__link'),
@@ -156,9 +92,4 @@ export function trackActiveSection(): void {
       }
     }
   }).observe(head);
-}
-
-export function initNav(): void {
-  renderNav();
-  trackActiveSection();
 }
