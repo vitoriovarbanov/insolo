@@ -27,6 +27,8 @@ export interface Readout {
   readonly label: string;
   readonly value: string;
   readonly unit: string;
+  /** Renders in the brand copper. At most one readout should carry it. */
+  readonly emphasis?: boolean;
 }
 
 export interface SiteContent {
@@ -114,7 +116,12 @@ export const site: SiteContent = {
   // these are public performance claims, not decoration.
   readouts: [
     { label: 'Peak altitude', value: '70.8', unit: 'DEG' },
-    { label: 'Annual irradiance', value: '1,420', unit: 'kWh/m²' },
+    {
+      label: 'Annual irradiance',
+      value: '1,420',
+      unit: 'kWh/m²',
+      emphasis: true,
+    },
     { label: 'Systems fitted', value: '318', unit: '' },
     { label: 'Median payback', value: '6.4', unit: 'YR' },
   ],
