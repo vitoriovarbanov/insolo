@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { site } from '@/content/site';
-import { buildLocalBusinessJsonLd } from '@/lib/structured-data';
+import { buildLocalBusinessJsonLd } from '@/seo/structured-data';
 
 const VISIBLE = { siteUrl: 'https://example.test', indexable: true };
 const HIDDEN = { siteUrl: 'https://example.test', indexable: false };

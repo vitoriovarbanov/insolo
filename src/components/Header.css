@@ -34,6 +34,10 @@
     flex: none;
   }
 
+  .site-header__brand picture {
+    display: block;
+  }
+
   .site-header__logo {
     /* Height-driven: the width follows from the asset's aspect ratio,
        so the reserved box stays correct if the lockup is re-cut. */

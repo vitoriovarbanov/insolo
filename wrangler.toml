@@ -7,7 +7,8 @@
 # Workers+Vite-plugin setup, which failed.
 #
 # A purely static site needs no `main` script: unmatched requests are
-# served straight from the assets directory.
+# served straight from the assets directory. Astro builds to ./dist with
+# output: 'static', so this block is unchanged from the Vite setup.
 
 name = "insolo"
 compatibility_date = "2026-09-01"

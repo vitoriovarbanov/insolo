@@ -1,5 +1,9 @@
 import type { SiteContent } from '@/content/site';
-import type { SiteEnv } from '@/lib/env';
+
+export interface SiteEnv {
+  readonly siteUrl: string;
+  readonly indexable: boolean;
+}
 
 export interface LocalBusinessJsonLd {
   '@context': 'https://schema.org';
@@ -72,15 +76,4 @@ export function buildLocalBusinessJsonLd(
       closes: slot.closes,
     })),
   };
-}
-
-/** Inject the JSON-LD script tag, or do nothing when not indexable. */
-export function injectJsonLd(data: LocalBusinessJsonLd | null): void {
-  if (data === null) {
-    return;
-  }
-  const script = document.createElement('script');
-  script.type = 'application/ld+json';
-  script.textContent = JSON.stringify(data);
-  document.head.append(script);
 }

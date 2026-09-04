@@ -1,0 +1,60 @@
+---
+import { Picture } from 'astro:assets';
+import { site } from '@/content/site';
+import logo from '@/assets/images/insolo-logo.png';
+---
+
+<header class="site-header">
+  <div class="container cluster cluster--between">
+    <a class="site-header__brand" href="#main">
+      <Picture
+        src={logo}
+        formats={['webp']}
+        fallbackFormat="webp"
+        widths={[114, 228, 342]}
+        sizes="114px"
+        alt={site.name}
+        class="site-header__logo"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </a>
+
+    <nav class="site-nav" id="site-menu" aria-label="Primary">
+      <ul class="site-nav__list">
+        {
+          site.nav.map((item) => (
+            <li>
+              <a class="site-nav__link" href={item.href}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <button
+      type="button"
+      class="site-menu-toggle"
+      aria-controls="site-menu"
+      aria-expanded="false"
+      aria-label="Menu"
+    >
+      <span class="site-menu-toggle__bars" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  import { initMenu } from '@/scripts/menu';
+
+  const toggle = document.querySelector<HTMLButtonElement>('.site-menu-toggle');
+  const panel = document.querySelector<HTMLElement>('.site-nav');
+  const header = document.querySelector<HTMLElement>('.site-header');
+
+  if (toggle && panel && header) {
+    initMenu(toggle, panel, header);
+  }
+</script>

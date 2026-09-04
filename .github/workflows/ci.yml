@@ -22,9 +22,10 @@ jobs:
 
       - run: npm run typecheck
 
-      - run: npm test
-
+      # Build before test: tests/image-budget.test.ts inspects dist/.
       - run: npm run build
         env:
-          VITE_SITE_URL: https://insolo.vitorio-0405.workers.dev
-          VITE_INDEXABLE: 'false'
+          SITE_URL: https://insolo.vitorio-0405.workers.dev
+          INDEXABLE: 'false'
+
+      - run: npm test

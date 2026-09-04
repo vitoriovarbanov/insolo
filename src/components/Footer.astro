@@ -1,0 +1,55 @@
+---
+import { site } from '@/content/site';
+
+const { address, openingHours } = site;
+const hours = openingHours[0];
+const dayRange =
+  hours && hours.days.length > 1
+    ? `${hours.days[0]}–${hours.days[hours.days.length - 1]}`
+    : (hours?.days[0] ?? '');
+
+const localityLine = `${address.postalCode} ${address.addressLocality}`;
+const copyright = `© ${site.foundingYear}–${new Date().getFullYear()} ${site.legalName}`;
+---
+
+<footer class="container section section--ruled">
+  <div class="grid" style="--grid-min: 14rem">
+    <div class="stack stack--tight">
+      <p class="label">{site.name}</p>
+      <address class="hero__lead" style="font-style: normal">
+        {address.streetAddress}<br />
+        {localityLine}<br />
+        {address.addressCountry}
+      </address>
+    </div>
+
+    <div class="stack stack--tight">
+      <p class="label">Contact</p>
+      <p><a href={`tel:${site.telephone}`}>{site.telephone}</a></p>
+      <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+
+    {
+      hours && (
+        <div class="stack stack--tight">
+          <p class="label">Hours</p>
+          <p>
+            {dayRange}
+            <br />
+            <time datetime={hours.opens}>{hours.opens}</time>–
+            <time datetime={hours.closes}>{hours.closes}</time>
+          </p>
+        </div>
+      )
+    }
+
+    <div class="stack stack--tight">
+      <p class="label">Area served</p>
+      <p>{site.areaServed.join(', ')}</p>
+    </div>
+  </div>
+
+  <p class="label" style="margin-block-start: var(--space-xl)">
+    {copyright}
+  </p>
+</footer>

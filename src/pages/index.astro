@@ -1,0 +1,45 @@
+---
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Hero from '@/components/Hero.astro';
+import Footer from '@/components/Footer.astro';
+import { site } from '@/content/site';
+---
+
+<Base title={`${site.name} — solar photovoltaic design and installation`}>
+  <a class="visually-hidden button button--ghost" href="#main">
+    Skip to main content
+  </a>
+
+  <Header />
+
+  <main id="main">
+    <Hero />
+
+    <section class="container section section--ruled" id="services" data-reveal>
+      <h2>Services</h2>
+    </section>
+
+    <section class="container section section--ruled" id="projects" data-reveal>
+      <h2>Projects</h2>
+    </section>
+
+    <section class="container section section--ruled" id="method" data-reveal>
+      <h2>Method</h2>
+    </section>
+
+    <section class="container section section--ruled" id="contact" data-reveal>
+      <h2>Contact</h2>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  import { initScrollReveal } from '@/scripts/reveal';
+  import { trackActiveSection } from '@/scripts/active-section';
+
+  initScrollReveal();
+  trackActiveSection();
+</script>
