@@ -1,0 +1,173 @@
+@layer components {
+  /* Site-survey annotation cards: each project reads like a field
+     note pinned to the roof it describes. */
+  .projects__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl) var(--space-l);
+  }
+
+  @media (min-width: 64rem) {
+    .projects__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .project-card__site {
+    font-family: var(--font-label);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label-role);
+    text-transform: uppercase;
+    color: var(--color-text-brand);
+    margin-block-end: var(--space-xs);
+  }
+
+  .project-card__frame {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+  }
+
+  .project-card__frame picture {
+    display: block;
+  }
+
+  .project-card__frame img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* Registration-mark corners, inset from the frame edge. */
+  .project-card__corners {
+    position: absolute;
+    inset: 8px;
+    pointer-events: none;
+  }
+
+  .project-card__corners span {
+    position: absolute;
+    inline-size: 14px;
+    block-size: 14px;
+    border-color: var(--color-border-brand);
+  }
+
+  .project-card__corners span:nth-child(1) {
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    border-block-start: 1.5px solid;
+    border-inline-start: 1.5px solid;
+  }
+  .project-card__corners span:nth-child(2) {
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    border-block-start: 1.5px solid;
+    border-inline-end: 1.5px solid;
+  }
+  .project-card__corners span:nth-child(3) {
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    border-block-end: 1.5px solid;
+    border-inline-start: 1.5px solid;
+  }
+  .project-card__corners span:nth-child(4) {
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    border-block-end: 1.5px solid;
+    border-inline-end: 1.5px solid;
+  }
+
+  /* SVG leader line + dot. Coordinates are written as attributes at
+     build time from each project's marker, against a 0-100 viewBox. */
+  .project-card__marker {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .project-card__marker circle:first-of-type {
+    fill: none;
+    stroke: var(--color-border-brand);
+    stroke-width: 0.7;
+  }
+
+  .project-card__marker circle:last-of-type {
+    fill: var(--color-border-brand);
+  }
+
+  .project-card__marker line {
+    stroke: var(--color-border-brand);
+    stroke-width: 0.5;
+    stroke-dasharray: 1.6 1.6;
+  }
+
+  .project-card__tag {
+    position: absolute;
+    padding: 5px 9px;
+    background-color: color-mix(
+      in oklab,
+      var(--color-surface) 85%,
+      transparent
+    );
+    border: 1px solid var(--color-border-brand);
+    border-radius: var(--radius-s);
+    font-family: var(--font-label);
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-label-role);
+    color: var(--color-text);
+  }
+
+  .project-card__tag--tl {
+    inset-block-start: 10px;
+    inset-inline-start: 10px;
+  }
+  .project-card__tag--tr {
+    inset-block-start: 10px;
+    inset-inline-end: 10px;
+  }
+  .project-card__tag--bl {
+    inset-block-end: 10px;
+    inset-inline-start: 10px;
+  }
+  .project-card__tag--br {
+    inset-block-end: 10px;
+    inset-inline-end: 10px;
+  }
+
+  .project-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding-block-start: var(--space-m);
+  }
+
+  .project-card__name {
+    font-size: var(--text-h3);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .project-card__summary {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .project-card__footer {
+    display: flex;
+    justify-content: space-between;
+    padding-block-start: var(--space-xs);
+    margin-block-start: var(--space-2xs);
+    border-block-start: 1px solid var(--color-border);
+  }
+}

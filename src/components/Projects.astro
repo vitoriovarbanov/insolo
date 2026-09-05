@@ -1,0 +1,84 @@
+---
+import { Picture } from 'astro:assets';
+import { projects } from '@/content/projects';
+---
+
+<div class="section-header">
+  <p class="eyebrow">Sofia · Residential</p>
+  <h2>Projects</h2>
+  <p class="section-header__lead">
+    Field notes from recent installs — sized to each roof and each household's
+    own consumption.
+  </p>
+</div>
+
+<div class="projects__grid">
+  {
+    projects.map((project) => {
+      const markerY = project.marker.y * 0.75;
+      const lineX = project.marker.corner.includes('r') ? 92 : 8;
+      const lineY = project.marker.corner.includes('t') ? 8 : 67;
+      const site = `Site ${project.id.slice(0, 3).toUpperCase()} — ${project.locality.toUpperCase()}`;
+      const stringLabel = `${project.strings} string${project.strings === 1 ? '' : 's'}`;
+      const fittedLabel = `Fitted ${project.fitted}`;
+      const capacityLabel = `Array · ${project.capacityKwp} kWp`;
+
+      return (
+        <article class="project-card">
+          <p class="project-card__site">{site}</p>
+
+          <div class="project-card__frame">
+            <Picture
+              src={project.image}
+              formats={['webp']}
+              fallbackFormat="webp"
+              widths={[400, 640, 800, 1100]}
+              width={1100}
+              sizes="(min-width: 64rem) 22rem, calc(100vw - 3rem)"
+              quality={65}
+              alt={project.imageAlt}
+              loading="lazy"
+              decoding="async"
+              style={`object-position: ${project.imagePosition}`}
+            />
+
+            <div class="project-card__corners" aria-hidden="true">
+              <>
+                <span />
+                <span />
+                <span />
+                <span />
+              </>
+            </div>
+
+            <svg
+              class="project-card__marker"
+              viewBox="0 0 100 75"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <line x1={project.marker.x} y1={markerY} x2={lineX} y2={lineY} />
+              <circle cx={project.marker.x} cy={markerY} r="2" />
+              <circle cx={project.marker.x} cy={markerY} r="0.6" />
+            </svg>
+
+            <div
+              class={`project-card__tag project-card__tag--${project.marker.corner}`}
+            >
+              {capacityLabel}
+            </div>
+          </div>
+
+          <div class="project-card__body">
+            <h3 class="project-card__name">{project.name}</h3>
+            <p class="project-card__summary">{project.summary}</p>
+            <div class="project-card__footer">
+              <span class="label">{fittedLabel}</span>
+              <span class="label">{stringLabel}</span>
+            </div>
+          </div>
+        </article>
+      );
+    })
+  }
+</div>
