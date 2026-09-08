@@ -18,6 +18,7 @@
 
 @import '../components/Hero.css';
 @import '../components/Header.css';
+@import '../components/Services.css';
 @import '../components/Projects.css';
 
 @import './ui/reveal.css';

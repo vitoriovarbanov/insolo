@@ -20,6 +20,7 @@
   --color-border: oklch(1 0 0 / 0.07);
   --color-border-strong: oklch(1 0 0 / 0.16);
   --color-border-brand: var(--copper-500);
+  --color-border-solid: var(--teal-600);
 
   /* --- Interaction --- */
   --color-action: var(--copper-500);
