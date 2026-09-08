@@ -1,0 +1,293 @@
+@layer components {
+  .services__wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  @media (min-width: 64rem) {
+    .services__wrap {
+      grid-template-columns: clamp(27.5rem, 38%, 34rem) 1fr;
+      gap: var(--space-2xl);
+    }
+  }
+
+  @keyframes services-sheen {
+    0% {
+      transform: translateX(-60%) rotate(12deg);
+    }
+    100% {
+      transform: translateX(160%) rotate(12deg);
+    }
+  }
+
+  .services__panel {
+    position: relative;
+    inline-size: min(100%, 27.5rem);
+    aspect-ratio: 22 / 15;
+    border-radius: var(--radius-l);
+    border: 3px solid var(--color-border-solid);
+    background-color: var(--color-surface-sunken);
+    overflow: hidden;
+    box-shadow: var(--shadow-l);
+  }
+
+  @media (min-width: 64rem) {
+    .services__panel {
+      inline-size: 100%;
+    }
+  }
+
+  .services__cells {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--color-border-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border-strong) 1px, transparent 1px);
+    background-size: calc(100% / 8) calc(100% / 5);
+  }
+
+  .services__sheen {
+    position: absolute;
+    inset-block: -30%;
+    inline-size: 22%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(1 0 0 / 0.16) 45%,
+      color-mix(in oklab, var(--color-border-brand) 60%, transparent) 50%,
+      oklch(1 0 0 / 0.16) 55%,
+      transparent
+    );
+    animation: services-sheen 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .services__bolt {
+    position: absolute;
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-solid);
+  }
+
+  .services__bolt--tl {
+    inset-block-start: 8px;
+    inset-inline-start: 8px;
+  }
+
+  .services__bolt--tr {
+    inset-block-start: 8px;
+    inset-inline-end: 8px;
+  }
+
+  .services__bolt--bl {
+    inset-block-end: 8px;
+    inset-inline-start: 8px;
+  }
+
+  .services__bolt--br {
+    inset-block-end: 8px;
+    inset-inline-end: 8px;
+  }
+
+  .services__node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .services__chip {
+    inline-size: 38px;
+    block-size: 38px;
+    border-radius: 50%;
+    background-color: var(--color-surface-sunken);
+    border: 1.5px solid var(--color-border-solid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    transition:
+      background-color var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      color var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      transform var(--duration-glide) var(--ease-out);
+  }
+
+  .services__node-label {
+    font-family: var(--font-label);
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-label-role);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    transition: color var(--duration-base) var(--ease-out);
+  }
+
+  /* --- The wheel --- */
+
+  .services__list {
+    position: relative;
+    display: grid;
+    grid-auto-rows: 1fr;
+    margin: 0;
+    padding: 0;
+    padding-inline-end: var(--space-xl);
+    list-style: none;
+  }
+
+  .services__row {
+    padding: var(--space-s) var(--space-l);
+    border-inline-start: 2px solid var(--color-border);
+    transition: border-color var(--duration-glide) var(--ease-out);
+  }
+
+  .services__row-idx {
+    font-family: var(--font-label);
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+  }
+
+  .services__row-name {
+    display: block;
+    transform-origin: left center;
+    margin-block-start: var(--space-3xs);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-heading);
+    color: var(--color-text-muted);
+    transition:
+      color var(--duration-base) var(--ease-out),
+      transform var(--duration-glide) var(--ease-out);
+  }
+
+  .services__row-desc {
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--text-small);
+    line-height: var(--leading-normal);
+    color: var(--color-text-label);
+    transition: opacity var(--duration-base) var(--ease-out);
+  }
+
+  .services__needle {
+    position: absolute;
+    inset-inline-end: 0;
+    inset-block-start: 0;
+    block-size: calc(100% / var(--count));
+    display: flex;
+    align-items: center;
+    color: var(--color-text-brand);
+    transform: translateY(calc(var(--active, 0) * 100%));
+    transition: transform var(--duration-glide) var(--ease-out);
+    pointer-events: none;
+  }
+
+  /* The rows recede as the wheel settles elsewhere — the detent. */
+  .services__list:hover .services__row:not(:hover) .services__row-name,
+  .services__list:hover .services__row:not(:hover) .services__row-desc {
+    opacity: 0.45;
+  }
+
+  .services__row:hover {
+    border-inline-start-color: var(--color-border-brand);
+  }
+
+  .services__row:hover .services__row-name {
+    transform: scale(1.06);
+    color: var(--color-text);
+  }
+
+  /* Needle index, driven by the row under the pointer. */
+  .services__wrap:has(.services__row--consultation:hover) {
+    --active: 0;
+  }
+
+  .services__wrap:has(.services__row--design:hover) {
+    --active: 1;
+  }
+
+  .services__wrap:has(.services__row--construction:hover) {
+    --active: 2;
+  }
+
+  .services__wrap:has(.services__row--lightning:hover) {
+    --active: 3;
+  }
+
+  .services__wrap:has(.services__row--monitoring:hover) {
+    --active: 4;
+  }
+
+  /* One-way cross-link: a hovered row lights its node on the panel. */
+  .services__wrap:has(.services__row--consultation:hover)
+    .services__node--consultation
+    .services__chip,
+  .services__wrap:has(.services__row--design:hover)
+    .services__node--design
+    .services__chip,
+  .services__wrap:has(.services__row--construction:hover)
+    .services__node--construction
+    .services__chip,
+  .services__wrap:has(.services__row--lightning:hover)
+    .services__node--lightning
+    .services__chip,
+  .services__wrap:has(.services__row--monitoring:hover)
+    .services__node--monitoring
+    .services__chip {
+    background-color: var(--color-surface-brand);
+    border-color: var(--color-border-brand);
+    color: var(--color-text-on-brand);
+    box-shadow: 0 0 24px 2px var(--color-surface-brand-subtle);
+    transform: scale(1.12);
+  }
+
+  .services__wrap:has(.services__row--consultation:hover)
+    .services__node--consultation
+    .services__node-label,
+  .services__wrap:has(.services__row--design:hover)
+    .services__node--design
+    .services__node-label,
+  .services__wrap:has(.services__row--construction:hover)
+    .services__node--construction
+    .services__node-label,
+  .services__wrap:has(.services__row--lightning:hover)
+    .services__node--lightning
+    .services__node-label,
+  .services__wrap:has(.services__row--monitoring:hover)
+    .services__node--monitoring
+    .services__node-label {
+    color: var(--color-text-brand);
+  }
+
+  /* Resting state: step 01 is lit, so the wheel never looks dead. */
+  .services__wrap:not(:has(.services__row:hover))
+    .services__node--consultation
+    .services__chip {
+    background-color: var(--color-surface-brand);
+    border-color: var(--color-border-brand);
+    color: var(--color-text-on-brand);
+    box-shadow: 0 0 24px 2px var(--color-surface-brand-subtle);
+    transform: scale(1.12);
+  }
+
+  .services__wrap:not(:has(.services__row:hover))
+    .services__node--consultation
+    .services__node-label {
+    color: var(--color-text-brand);
+  }
+
+  .services__wrap:not(:has(.services__row:hover)) .services__row--consultation {
+    border-inline-start-color: var(--color-border-brand);
+  }
+
+  .services__wrap:not(:has(.services__row:hover))
+    .services__row--consultation
+    .services__row-name {
+    color: var(--color-text);
+  }
+}

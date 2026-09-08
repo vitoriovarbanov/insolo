@@ -105,6 +105,9 @@
   --duration-fast: 140ms;
   --duration-base: 220ms;
   --duration-slow: 750ms;
+  /* Travel of the services needle: long enough to read as weight,
+     short enough not to lag the pointer. */
+  --duration-glide: 420ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* --- Breakpoints. Content-driven, not device-named. --- */
@@ -114,5 +117,5 @@
   /* --- Layout. --- */
   --measure: 65ch;
   --measure-tight: 32ch;
-  --container-max: 72rem;
+  --container-max: 80rem;
 }
