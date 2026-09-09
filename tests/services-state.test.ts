@@ -25,9 +25,9 @@ describe('services wheel selectors', () => {
 
   it('references no step id the content does not define', () => {
     const known = new Set(processSteps.map((step) => step.id));
-    const referenced = [
-      ...css.matchAll(/services__(?:row|node)--([a-z-]+)/g),
-    ].map((m) => m[1]);
+    const referenced = [...css.matchAll(/services__(?:row|node)--([a-z-]+)/g)]
+      .map((m) => m[1])
+      .filter((id): id is string => id !== undefined);
     const orphans = [...new Set(referenced)].filter((id) => !known.has(id));
 
     expect(orphans, 'Services.css targets ids missing from process.ts').toEqual(

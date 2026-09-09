@@ -1,0 +1,274 @@
+@layer components {
+  .method {
+    --method-index: 2.5rem;
+
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 64rem) {
+    .method {
+      grid-template-columns: clamp(16rem, 30%, 22rem) 1fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+
+    .method__figure-col {
+      position: sticky;
+      inset-block-start: calc(3.5rem + var(--space-l));
+    }
+  }
+
+  .method__diagram {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: 20rem;
+    margin-inline: auto;
+    overflow: visible;
+  }
+
+  .method__layer {
+    transition:
+      transform var(--duration-glide) var(--ease-out),
+      opacity var(--duration-base) var(--ease-out);
+  }
+
+  /* Non-active layers recede; the active one lifts along the isometric
+     axis so it reads as pulled out of the stack. */
+  .method__diagram .method__layer {
+    opacity: 0.4;
+  }
+
+  .method__diagram .method__layer.is-active {
+    opacity: 1;
+    transform: translate(-14px, -18px);
+  }
+
+  .method__plate {
+    fill: var(--color-surface-raised);
+    stroke: var(--color-border-solid);
+    stroke-width: 1.5;
+  }
+
+  .method__face {
+    fill: var(--color-surface-sunken);
+    stroke: var(--color-border-solid);
+    stroke-width: 1.5;
+  }
+
+  .method__cell,
+  .method__rail {
+    fill: var(--color-surface-sunken);
+    stroke: var(--color-border-solid);
+    stroke-width: 1;
+  }
+
+  .method__conduit {
+    fill: none;
+    stroke: var(--color-border-solid);
+    stroke-width: 2;
+    stroke-dasharray: 5 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .method__inverter {
+    fill: var(--color-surface-raised);
+    stroke: var(--color-border-solid);
+    stroke-width: 1.5;
+  }
+
+  .method__layer.is-active .method__plate,
+  .method__layer.is-active .method__inverter {
+    stroke: var(--color-border-brand);
+  }
+
+  /* A tint, not a fill: the same token at 38px in a Services chip is an
+     accent, but across a 250px plate it becomes the whole section. */
+  .method__layer.is-active .method__cell,
+  .method__layer.is-active .method__rail {
+    fill: color-mix(in oklab, var(--color-surface-brand) 28%, transparent);
+    stroke: var(--color-border-brand);
+  }
+
+  .method__layer.is-active .method__conduit {
+    stroke: var(--color-border-brand);
+  }
+
+  .method__row {
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .method__row:first-of-type {
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .method__summary {
+    display: grid;
+    grid-template-columns: var(--method-index) 1fr auto;
+    gap: var(--space-m);
+    align-items: start;
+    padding: var(--space-l) var(--space-m);
+    cursor: pointer;
+    list-style: none;
+    transition:
+      background-color var(--duration-base) var(--ease-out),
+      padding-inline-start var(--duration-glide) var(--ease-out);
+  }
+
+  /* The UA disclosure triangle, in both spellings. */
+  .method__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .method__summary::marker {
+    content: '';
+  }
+
+  .method__index {
+    font-family: var(--font-label);
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    transition: color var(--duration-base) var(--ease-out);
+  }
+
+  .method__heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .method__eyebrow {
+    transition: color var(--duration-base) var(--ease-out);
+  }
+
+  .method__title {
+    font-size: var(--text-h3);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-muted);
+    transition: color var(--duration-base) var(--ease-out);
+  }
+
+  .method__lead {
+    font-size: var(--text-small);
+    color: var(--color-text-label);
+  }
+
+  .method__marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 44px;
+    block-size: 44px;
+    margin-block-start: calc(var(--space-3xs) * -1);
+    color: var(--color-text-muted);
+    transition:
+      transform var(--duration-glide) var(--ease-out),
+      color var(--duration-base) var(--ease-out);
+  }
+
+  .method__panel {
+    display: grid;
+    grid-row: 1 / span 2;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows var(--duration-glide) var(--ease-out);
+  }
+
+  .method__panel-inner {
+    display: grid;
+    grid-template-columns: var(--method-index) 1fr;
+    column-gap: var(--space-m);
+    padding-inline: var(--space-m);
+    overflow: hidden;
+    contain: layout;
+  }
+
+  .method__detail,
+  .method__figure {
+    grid-column: 2;
+  }
+
+  .method__detail {
+    max-inline-size: var(--measure);
+    color: var(--color-text-label);
+    margin-block: 0 var(--space-m);
+  }
+
+  .method__figure {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-s);
+    margin-block: 0;
+    padding-block-end: var(--space-l);
+  }
+
+  .method__figure-caption {
+    color: var(--color-text-muted);
+  }
+
+  /* --- Open --- */
+
+  .method__row[open] {
+    position: relative;
+    background-color: var(--color-surface-raised);
+    border-radius: var(--radius-card);
+    border-block-end-color: transparent;
+  }
+
+  .method__row[open]::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 2px;
+    background-color: var(--color-border-brand);
+    border-start-start-radius: var(--radius-card);
+    border-end-start-radius: var(--radius-card);
+  }
+
+  .method__row[open] .method__summary {
+    padding-inline-start: var(--space-l);
+  }
+
+  .method__row[open] .method__index,
+  .method__row[open] .method__eyebrow,
+  .method__row[open] .method__marker {
+    color: var(--color-text-brand);
+  }
+
+  .method__row[open] .method__title {
+    color: var(--color-text);
+  }
+
+  .method__row[open] .method__marker {
+    transform: rotate(180deg);
+  }
+
+  /* The one-line summary is redundant once the paragraph is showing. */
+  .method__row[open] .method__lead {
+    display: none;
+  }
+
+  .method__row[open] .method__panel-inner {
+    padding-inline-start: var(--space-l);
+  }
+
+  @media (min-width: 48rem) {
+    .method__summary {
+      gap: var(--space-l);
+      padding-inline: var(--space-l);
+    }
+
+    .method__panel-inner {
+      column-gap: var(--space-l);
+      padding-inline: var(--space-l);
+    }
+
+    .method__row[open] .method__summary,
+    .method__row[open] .method__panel-inner {
+      padding-inline-start: var(--space-xl);
+    }
+  }
+}
