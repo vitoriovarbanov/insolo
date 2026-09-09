@@ -1,0 +1,150 @@
+---
+import ChevronDown from '@/assets/icons/chevron-down.svg';
+import { methodLayers } from '@/content/method';
+
+/* 2:1 isometric. A horizontal plate is a rhombus of half-width W and
+   half-height H; thickness is two side faces dropped by t. Geometry is
+   computed rather than hand-written so the layers cannot drift apart. */
+const CX = 150;
+const W = 118;
+const H = 59;
+
+const top = (cy: number) =>
+  `${CX},${cy - H} ${CX + W},${cy} ${CX},${cy + H} ${CX - W},${cy}`;
+const left = (cy: number, t: number) =>
+  `${CX - W},${cy} ${CX},${cy + H} ${CX},${cy + H + t} ${CX - W},${cy + t}`;
+const right = (cy: number, t: number) =>
+  `${CX + W},${cy} ${CX},${cy + H} ${CX},${cy + H + t} ${CX + W},${cy + t}`;
+
+/* A point on the top face in plate coordinates, u and v in 0..1. */
+const at = (cy: number, u: number, v: number): [number, number] => [
+  CX - W + (u + v) * W,
+  cy + (v - u) * H,
+];
+
+const cell = (cy: number, u0: number, v0: number, u1: number, v1: number) =>
+  [at(cy, u0, v0), at(cy, u1, v0), at(cy, u1, v1), at(cy, u0, v1)]
+    .map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`)
+    .join(' ');
+
+const PLATES = [
+  { id: 'array', cy: 74, t: 9 },
+  { id: 'rail', cy: 150, t: 7 },
+  { id: 'flashing', cy: 212, t: 4 },
+  { id: 'deck', cy: 272, t: 15 },
+];
+
+const COLS = 4;
+const ROWS = 2;
+const PAD = 0.045;
+const cells = Array.from({ length: COLS * ROWS }, (_, i) => {
+  const u = Math.floor(i / ROWS) / COLS;
+  const v = (i % ROWS) / ROWS;
+  return cell(74, u + PAD, v + PAD, u + 1 / COLS - PAD, v + 1 / ROWS - PAD);
+});
+
+/* Two rails, run as narrow bands across the plate. */
+const rails = [0.18, 0.62].map((u) => cell(150, u, -0.02, u + 0.2, 1.02));
+
+const [condTop, condBend] = [at(74, 1, 0.5), at(212, 1, 0.5)];
+---
+
+<div class="section-header">
+  <p class="eyebrow">Sofia · Workmanship</p>
+  <h2>Method</h2>
+  <p class="section-header__lead">
+    What an installation is made of, from the rafter outward — and the reasoning
+    behind each layer.
+  </p>
+</div>
+
+<div class="method">
+  <div class="method__figure-col">
+    <svg
+      class="method__diagram"
+      viewBox="0 0 300 340"
+      role="img"
+      aria-label="Exploded view of a roof-mounted array: deck, flashing, mounting rail, panels, and the cable run to the inverter."
+    >
+      {
+        PLATES.map((plate) => (
+          <g
+            class={`method__layer${plate.id === methodLayers[0]?.id ? ' is-active' : ''}`}
+            data-layer={plate.id}
+          >
+            <polygon class="method__face" points={right(plate.cy, plate.t)} />
+            <polygon class="method__face" points={left(plate.cy, plate.t)} />
+            <polygon class="method__plate" points={top(plate.cy)} />
+
+            {plate.id === 'array' &&
+              cells.map((points) => (
+                <polygon class="method__cell" points={points} />
+              ))}
+
+            {plate.id === 'rail' &&
+              rails.map((points) => (
+                <polygon class="method__rail" points={points} />
+              ))}
+          </g>
+        ))
+      }
+
+      <g class="method__layer" data-layer="electrical">
+        <polyline
+          class="method__conduit"
+          points={`${condTop[0]},${condTop[1]} ${condTop[0] + 34},${condTop[1] + 20} ${condTop[0] + 34},${condBend[1] + 30} ${condTop[0] + 6},${condBend[1] + 46}`}
+        ></polyline>
+        <polygon
+          class="method__inverter"
+          points={`${condTop[0] + 6},${condBend[1] + 32} ${condTop[0] + 26},${condBend[1] + 42} ${condTop[0] + 6},${condBend[1] + 52} ${condTop[0] - 14},${condBend[1] + 42}`}
+        ></polygon>
+      </g>
+    </svg>
+  </div>
+
+  <div class="method__rows">
+    {
+      methodLayers.map((layer, i) => (
+        <details
+          class="method__row"
+          name="method"
+          open={i === 0}
+          data-method-row
+          data-layer-id={layer.id}
+        >
+          <summary class="method__summary">
+            <span class="method__index">{String(i + 1).padStart(2, '0')}</span>
+
+            <span class="method__heading">
+              <span class="label method__eyebrow">{layer.eyebrow}</span>
+              <span class="method__title">{layer.title}</span>
+              <span class="method__lead">{layer.summary}</span>
+            </span>
+
+            <span class="method__marker" aria-hidden="true">
+              <ChevronDown width={20} height={20} stroke-width={1.6} />
+            </span>
+          </summary>
+
+          <div class="method__panel" data-method-panel>
+            <div class="method__panel-inner">
+              <p class="method__detail">{layer.detail}</p>
+
+              <p class="method__figure">
+                <span class="readout readout--brand">
+                  {layer.figure.value}
+                  {layer.figure.unit && (
+                    <span class="readout__unit">{layer.figure.unit}</span>
+                  )}
+                </span>
+                <span class="label method__figure-caption">
+                  {layer.figure.caption}
+                </span>
+              </p>
+            </div>
+          </div>
+        </details>
+      ))
+    }
+  </div>
+</div>
