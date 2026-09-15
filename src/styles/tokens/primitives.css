@@ -110,6 +110,9 @@
   --duration-glide: 420ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
+  --duration-arc: 16s;
+  --ease-arc: cubic-bezier(0.45, 0, 0.55, 1);
+
   /* --- Breakpoints. Content-driven, not device-named. --- */
   --bp-m: 40rem;
   --bp-l: 64rem;

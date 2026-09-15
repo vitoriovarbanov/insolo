@@ -84,7 +84,7 @@
      not to compete with the headline. */
   .hero__panel {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
     margin-inline: var(--container-padding-inline);
     margin-block-end: var(--space-l);
@@ -94,9 +94,6 @@
     overflow: hidden;
   }
 
-  /* Column with the value pinned to the foot of the cell, so a label
-     that wraps to two lines does not knock its value off the line its
-     neighbours sit on. */
   .hero__readout {
     display: flex;
     flex-direction: column;
@@ -115,7 +112,7 @@
      still sits in the flow — the headline owns the image on its own. */
   @media (min-width: 40rem) {
     .hero__panel {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
 
       /* Match the container gutter so the panel lines up with the copy
          once the viewport is wider than --container-max. */
@@ -159,7 +156,7 @@
     .hero__content {
       /* Reserve the panel's column so a long headline cannot run
          underneath it. */
-      padding-inline-end: calc(21rem + var(--space-2xl));
+      padding-inline-end: calc(24rem + var(--space-2xl));
     }
 
     .hero__panel {
@@ -169,8 +166,8 @@
         var(--container-padding-inline),
         (100% - var(--container-max)) / 2 + var(--container-padding-inline)
       );
-      grid-template-columns: repeat(2, 1fr);
-      inline-size: 21rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      inline-size: 24rem;
       margin: 0;
       box-shadow: var(--shadow-m);
     }

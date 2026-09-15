@@ -1,0 +1,102 @@
+---
+// TODO: the email, telephone and address rendered here come from
+// src/content/site.ts and are INVENTED but realistic-looking. This section
+// displays them larger than anything else on the page. Verify them there —
+// see the header block in that file — before crawling or indexing is enabled.
+import { site } from '@/content/site';
+
+const hours = site.openingHours[0];
+const firstDay = hours?.days[0] ?? '';
+const lastDay = hours?.days[hours.days.length - 1] ?? '';
+
+const telDisplay = site.telephone.replace(
+  /^(\+359)(\d)(\d{4})(\d+)$/,
+  '$1 $2 $3 $4',
+);
+
+const { streetAddress, addressLocality, postalCode } = site.address;
+const addressLine = `${streetAddress}, ${addressLocality} ${postalCode}`;
+---
+
+<div class="section-header">
+  <p class="eyebrow">Direct line</p>
+  <h2>Contact</h2>
+  <p class="section-header__lead">
+    Call, email, or come by — whichever's easiest for you.
+  </p>
+</div>
+
+<div class="contact">
+  <div class="contact__block">
+    {
+      hours && (
+        <div class="contact__hours" aria-hidden="true">
+          <svg viewBox="0 0 400 96" class="contact__hours-svg">
+            <path class="contact__hours-path" d="M10 90 Q200 -10 390 90" />
+            <circle class="contact__hours-sun" cx="0" cy="0" r="7" />
+          </svg>
+          <span class="contact__hours-mark contact__hours-mark--start">
+            {hours.opens}
+          </span>
+          <span class="contact__hours-mark contact__hours-mark--end">
+            {hours.closes}
+          </span>
+        </div>
+      )
+    }
+
+    <div class="contact__row">
+      <span class="contact__lug" aria-hidden="true"></span>
+      <div>
+        <span class="contact__label">Call</span>
+        <span class="contact__value">
+          <a href={`tel:${site.telephone}`}>{telDisplay}</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="contact__row">
+      <span class="contact__lug" aria-hidden="true"></span>
+      <div>
+        <span class="contact__label">Email</span>
+        <span class="contact__value">
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="contact__row">
+      <span class="contact__lug" aria-hidden="true"></span>
+      <div>
+        <span class="contact__label">Visit</span>
+        <address class="contact__value contact__value--address">
+          {addressLine}
+        </address>
+      </div>
+    </div>
+
+    <span class="contact__bolt contact__bolt--tl" aria-hidden="true"></span>
+    <span class="contact__bolt contact__bolt--tr" aria-hidden="true"></span>
+    <span class="contact__bolt contact__bolt--bl" aria-hidden="true"></span>
+    <span class="contact__bolt contact__bolt--br" aria-hidden="true"></span>
+  </div>
+
+  <div class="contact__aside">
+    {
+      hours && (
+        <p class="contact__note">
+          We're at the desk {firstDay} through {lastDay}, {hours.opens} to{' '}
+          {hours.closes} — that's the stretch the arc is tracing. Call outside
+          those hours and it'll go to voicemail, but we'll get back to you first
+          thing the next working day.
+        </p>
+      )
+    }
+    <a
+      class="button button--primary contact__cta"
+      href={`mailto:${site.email}`}
+    >
+      Email us &#8594;
+    </a>
+  </div>
+</div>

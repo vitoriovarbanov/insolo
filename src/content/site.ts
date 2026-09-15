@@ -104,25 +104,50 @@ export interface SiteContent {
   readonly readouts: readonly Readout[];
 }
 
+// ---------------------------------------------------------------------------
+// THE BUSINESS DETAILS BELOW ARE INVENTED, AND THEY NOW LOOK REAL.
+//
+//
+// The remaining safety mechanism is the indexing gate, and it is now the only
+// one. It MUST stay closed until these are real:
+//
+//   - INDEXABLE fails closed, so buildLocalBusinessJsonLd returns null and no
+//     LocalBusiness markup is emitted. Never default it to true.
+//   - public/robots.txt disallows all crawling.
+//
+// A fabricated address published as machine-readable LocalBusiness data is
+// what Google feeds into local search and Maps, and is a manual-action risk
+// for the domain. Verify every field below before opening either gate.
+// ---------------------------------------------------------------------------
 const content = {
   name: 'inSolo',
-  legalName: 'inSolo EOOD', // TODO: real registered entity
-  tagline: 'Nine hours of it lands on your roof.',
+  legalName: 'inSolo EOOD', // TODO: unverified — no such registered entity
+  // The hard part of solar is never the sunlight — it is the roof, the
+  // fixings and the wiring. The whole voice of the site follows from that.
+  tagline: 'Sunlight is the easy part.',
   description:
-    'Design, installation and maintenance of solar photovoltaic systems for homes and businesses.',
+    'Solar photovoltaic design and installation in Sofia — sized to your roof and your own consumption, fitted by the same crew that designed it.',
 
-  email: 'hello@example.com', // TODO
-  telephone: '+35920000000', // TODO — E.164, no spaces
+  // TODO: unverified. The domain is not registered, so this mailbox does not
+  // exist and enquiries sent to it are lost silently.
+  email: 'hello@insolo.bg',
+  // Deliberately unroutable: 359 + area code 2 + EIGHT subscriber digits,
+  // where the Sofia plan takes seven. Reads as an ordinary Bulgarian number
+  // at a glance but cannot be dialled, so it can belong to nobody.
+  // TODO: replace with the real number before launch.
+  telephone: '+359249901005',
 
   address: {
-    // TODO: all four fields
-    streetAddress: '1 Placeholder Street',
+    // TODO: unverified. Iskarsko shose is a real Sofia industrial corridor;
+    // this street number and the premises behind it are invented.
+    streetAddress: 'Iskarsko shose 7',
     addressLocality: 'Sofia',
-    postalCode: '1000',
+    postalCode: '1528',
     addressCountry: 'BG',
   },
 
-  geo: { latitude: 42.6977, longitude: 23.3219 }, // TODO: real coordinates
+  // TODO: approximate, derived from the invented address above.
+  geo: { latitude: 42.672, longitude: 23.402 },
 
   openingHours: [
     {
@@ -132,9 +157,9 @@ const content = {
     },
   ],
 
-  areaServed: ['Sofia'], // TODO
+  areaServed: ['Sofia', 'Sofia Province'], // TODO: confirm real coverage
   priceRange: '$$',
-  foundingYear: 2019, // TODO
+  foundingYear: 2019, // TODO: unverified
 
   services: [
     {
@@ -167,18 +192,23 @@ const content = {
     { href: '#contact', label: 'Contact' },
   ],
 
-  // TODO: every figure below is invented. Replace before launch —
-  // these are public performance claims, not decoration.
+  // Every figure here is a property of Sofia's location, not a claim about
+  // this company — true whoever installs the panels. "Systems fitted" and
+  // "Median payback" used to sit here and were invented track record.
+  //
+  // TODO: cite each against PVGIS (re.jrc.ec.europa.eu/pvg_tools) before
+  // launch. They are stated from general knowledge, not measured.
   readouts: [
-    { label: 'Peak altitude', value: '70.8', unit: 'DEG' },
+    // 90 − 42.70 latitude + 23.44 axial tilt, at the June solstice.
+    { label: 'Peak sun altitude', value: '70.8', unit: 'DEG' },
     {
       label: 'Annual irradiance',
       value: '1,420',
       unit: 'kWh/m²',
       emphasis: true,
     },
-    { label: 'Systems fitted', value: '318', unit: '' },
-    { label: 'Median payback', value: '6.4', unit: 'YR' },
+    { label: 'Yield per kWp', value: '1,290', unit: 'kWh/YR' },
+    { label: 'Sunshine hours', value: '2,100', unit: 'H/YR' },
   ],
 } as const;
 

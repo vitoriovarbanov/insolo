@@ -1,0 +1,201 @@
+@layer components {
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  @media (min-width: 64rem) {
+    .contact {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+    }
+  }
+
+  .contact__block {
+    position: relative;
+    background-color: var(--color-surface-sunken);
+    border: 2px solid var(--color-border-solid);
+    border-radius: var(--radius-l);
+    padding: var(--space-l) var(--space-l) var(--space-s);
+    overflow: hidden;
+  }
+
+  /* The block takes its height from the arc, which keeps the viewBox's
+     aspect ratio. Stretching it instead (preserveAspectRatio="none") scales
+     x and y differently, which draws the sun as an ellipse. */
+  .contact__hours {
+    position: relative;
+    margin: 0 calc(var(--space-l) * -1) var(--space-m);
+    padding-inline: var(--space-l);
+    padding-block-end: var(--space-m);
+    border-block-end: 1px dashed var(--color-border-strong);
+  }
+
+  .contact__hours-svg {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 400 / 96;
+    overflow: visible;
+  }
+
+  .contact__hours-path {
+    stroke: var(--color-border-strong);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 5;
+    fill: none;
+  }
+
+  .contact__hours-sun {
+    fill: var(--color-surface-brand);
+    filter: drop-shadow(0 0 6px var(--color-surface-brand-subtle));
+    offset-path: path('M10 90 Q200 -10 390 90');
+    offset-rotate: 0deg;
+    offset-distance: 50%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .contact__hours-sun {
+      animation: contact-sun var(--duration-arc) var(--ease-arc) infinite
+        alternate;
+    }
+  }
+
+  @keyframes contact-sun {
+    from {
+      offset-distance: 0%;
+    }
+    to {
+      offset-distance: 100%;
+    }
+  }
+
+  .contact__hours-mark {
+    position: absolute;
+    inset-block-end: 0;
+    font-family: var(--font-label);
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-label-role);
+    color: var(--color-text-label);
+  }
+
+  /* Aligned to the arc's own edges, not the panel border — the strip is
+     pulled full-bleed by a negative margin, so 0 would sit on the frame. */
+  .contact__hours-mark--start {
+    inset-inline-start: var(--space-l);
+  }
+
+  .contact__hours-mark--end {
+    inset-inline-end: var(--space-l);
+  }
+
+  .contact__row {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: var(--space-s);
+    align-items: center;
+    padding-block: var(--space-m);
+    border-block-end: 1px dashed var(--color-border-strong);
+  }
+
+  .contact__row:last-of-type {
+    border-block-end: none;
+  }
+
+  .contact__lug {
+    position: relative;
+    inline-size: 20px;
+    block-size: 20px;
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-border-solid);
+  }
+
+  .contact__lug::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    background-color: var(--color-border-brand);
+    border-radius: 50%;
+  }
+
+  .contact__label {
+    display: block;
+    margin-block-end: var(--space-3xs);
+    font-family: var(--font-label);
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-label-role);
+    color: var(--color-text-label);
+  }
+
+  .contact__value {
+    font-size: var(--text-lead);
+    font-weight: var(--weight-heading);
+    color: var(--color-text);
+  }
+
+  .contact__value a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact__value a:hover {
+    color: var(--color-text-brand);
+  }
+
+  .contact__value--address {
+    font-size: var(--text-small);
+    font-weight: var(--weight-regular);
+    font-style: normal;
+  }
+
+  .contact__bolt {
+    position: absolute;
+    inline-size: 9px;
+    block-size: 9px;
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-solid);
+  }
+
+  .contact__bolt--tl {
+    inset-block-start: 12px;
+    inset-inline-start: 12px;
+  }
+
+  .contact__bolt--tr {
+    inset-block-start: 12px;
+    inset-inline-end: 12px;
+  }
+
+  .contact__bolt--bl {
+    inset-block-end: 12px;
+    inset-inline-start: 12px;
+  }
+
+  .contact__bolt--br {
+    inset-block-end: 12px;
+    inset-inline-end: 12px;
+  }
+
+  .contact__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  /* The aside is already a narrow column, so the global 65ch cap never
+     bites. The override says the column does the measuring. */
+  .contact__note {
+    margin: 0;
+    max-width: none;
+    font-size: var(--text-lead);
+    line-height: var(--leading-normal);
+    color: var(--color-text-muted);
+  }
+
+  .contact__cta {
+    width: fit-content;
+  }
+}
