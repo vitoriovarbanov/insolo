@@ -40,7 +40,12 @@ import heroImage from '@/assets/images/insolo-hero.webp';
           <p class="label">{readout.label}</p>
           <p class={readout.emphasis ? 'readout readout--brand' : 'readout'}>
             {readout.value}
-            {readout.unit && <span class="readout__unit">{readout.unit}</span>}
+            {readout.unit && (
+              <>
+                <wbr />
+                <span class="readout__unit">{readout.unit}</span>
+              </>
+            )}
           </p>
         </div>
       ))
