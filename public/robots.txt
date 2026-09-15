@@ -1,6 +1,9 @@
-# inSolo is currently FICTIONAL. Business details on this site are
-# placeholders, so crawling is disallowed until they are real.
-# See CLAUDE.md, "Fictional company constraints".
+# inSolo is currently FICTIONAL. The business details on this site are
+# INVENTED, and they are realistic enough to be mistaken for real ones —
+# a working-looking email, a valid-format Sofia landline, a real street.
+# None has been verified. Crawling stays disallowed until they are real.
+# See CLAUDE.md, "Fictional company constraints", and the header block in
+# src/content/site.ts.
 
 User-agent: *
 Disallow: /

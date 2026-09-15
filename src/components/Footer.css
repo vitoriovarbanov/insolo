@@ -1,0 +1,9 @@
+@layer components {
+  .site-footer {
+    padding-block: var(--space-xl) var(--space-l);
+  }
+
+  .site-footer__legal {
+    margin-block-start: var(--space-l);
+  }
+}
